@@ -743,10 +743,16 @@ do
     gh 'mason-org/mason.nvim',
     gh 'mason-org/mason-lspconfig.nvim',
     gh 'WhoIsSethDaniel/mason-tool-installer.nvim',
+    gh 'seblyng/roslyn.nvim',
   }
 
   -- Automatically install LSPs and related tools to stdpath for Neovim
-  require('mason').setup {}
+  require('mason').setup {
+    registries = {
+      'github:mason-org/mason-registry',
+      'github:Crashdummyy/mason-registry',
+    },
+  }
 
   -- Translates between nvim-lspconfig server names and mason.nvim package names (e.g. lua_ls <-> lua-language-server)
   require('mason-lspconfig').setup {
@@ -771,6 +777,16 @@ do
     vim.lsp.config(name, server)
     vim.lsp.enable(name)
   end
+  require('roslyn').setup {}
+
+  vim.lsp.config('roslyn', {
+  })
+ 
+  -- vim.lsp.config('roslyn', {
+  --   cmd_env = {
+  --     DOTNET_ROOT = '/usr/sbin/dotnet',
+  --   },
+  -- })
 end
 
 -- ============================================================
@@ -981,6 +997,5 @@ do
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- require 'custom.plugins'
 end
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
